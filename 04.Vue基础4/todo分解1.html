@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+p{display: block;}
+li.eidting p{display: none;}
+li.eidting .text2{display: block;} 
+li .text2{height: 40px;padding-left: 10px;box-sizing: border-box;margin-left: 10px;width: 80%;display: none}
+
+
+</style>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <div id="app">
+       <input type="text" placeholder="请输入你的小目标,并用回车确认" @keyup.13="addText" v-model="newText">
+       <ul>
+           <li v-for="(value,key) in newList" :class="{'eidting':currentIndex===key}">
+            <p @dblclick="currentIndex=key">{{value.name}}</p>
+           <input type="text" class="text2" v-model="value.name"  @keyup.esc='cancelEdit(value.name)' @blur='edited(value.name)' @focus='editBefore(value.name)' @keyup.enter='edited(value.name)' v-focus />
+       </li>
+        </ul>
+   </div>
+   <script>
+     var app = new Vue({
+         el:'#app',
+         data:{
+           newText:'',
+           prolist:[
+               {name:"HTML5",status:false},
+               {name:"CSS3",status:false},
+               {name:"vue",status:false},
+               {name:"react",status:false}
+           ],
+           newList:[],
+           currentIndex:'',
+           editeBeforeText:''
+         },
+         computed:{
+
+         },
+         methods:{
+           addText:function(){
+             this.prolist.push({
+               name:this.newText,
+               status:false  
+             })
+             this.newText=''
+           },
+        // 编辑前
+           editBefore:function(value){
+               this.editeBeforeText=value;
+            //    console.log(value)
+           },
+        //    编辑完成时
+           edited:function(value){ 
+              this.currentIndex="";
+              if(value=''){this.editeBeforeText=value}
+           },
+        //    取消编辑
+           cancelEdit:function(value){
+            value.name=this.editeBeforeText;
+            this.currentIndex=""; 
+           },
+           
+         },
+         mounted:function(){
+            this.newList=this.prolist
+         },
+         directives:{//自定义指令
+            "focus":{
+                update(el){
+                    el.focus();
+                }
+            }
+        }
+     })
+   </script> 
+</body>
+</html>

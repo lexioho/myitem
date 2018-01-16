@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../day4/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <table>
+    <tbody>
+    <tr><td is="my-row"></td></tr>    
+    </tbody>    
+</table>
+     <!-- <table><thead>122213131</thead><tbody>3131313131<option is="my-component"></option></tbody></table>     -->
+      <!-- <table><thead></thead><tbody><my-component></my-component></tbody></table> 
+    <table>
+         <thead></thead>
+         <tbody>
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+        </tbody>  
+    </table> --> 
+     <!-- <select name="ji" id="sel">
+         <option value="111">111</option>
+        <option value="222">222</option>
+        <option value="333">333</option> 
+        <my-component></my-component>
+    </select>  -->
+</div>
+<script>
+    //Dom模板解析
+    //注意事项：1.在有些情况下，组件也可以表现为用 is 特性进行了扩展的原生 HTML 元素。
+    //          2.只要你写了is，那么他就相当于是运输箱了，渲染时是一定不会出现这个标签的。
+    //          3.Vue始终不违背W3C原则，你该是什么规范写法就是什么规范写法，写位置不对，那我就不给渲染对。
+    //          4.所以<ul>、<ol>、<table>、<select> 这样的元素里允许包含的元素有限制，
+    //            而另一些像 <option> 这样的元素只能出现在某些特定元素的内部。
+    var app = new Vue({
+        el:'#app',
+        components:{
+        //    'my-component': {template:'<tr><td>I love China</td></tr>'}
+        'my-row':{template:'<td>I love China</td>'}
+        }
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+*{margin: 0;padding: 0;list-style: none;}
+#app{width: 800px;margin: 100px auto;} 
+li{position: relative;border: 1px solid transparent;padding: 0 20px;height: 40px;line-height: 40px;}
+li:hover{border: 1px solid #09f;}
+li .type-span{display: block;width: 10px;height: 10px;background: #ccc;margin: 14px 10px 0 0 ;float: left;}
+li .type-end{background: #09f;}
+p{display: block;}
+li.eidting p{display: none;}
+li.eidting .text2{display: block;} 
+li .text2{height: 40px;padding-left: 10px;box-sizing: border-box;margin-left: 10px;width: 80%;display: none}
+.text-keyword{box-sizing: border-box;width: 100%;height: 40px;padding-left: 10px;text-align: left} 
+li .close{position: absolute;color: #f00;font-size: 20px;line-height: 40px;height: 40px;right: 20px;cursor: pointer;display: none;top: 0;}
+li:hover .close{display: block}
+</style>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <div id="app">
+       <input type="text" class="text-keyword" placeholder="请输入你的小目标,并用回车确认" @keyup.13="addText" v-model="newText">
+       <p>共有{{proList.length}}个目标,{{noend==0?"全部完成了":'已完成'+(proList.length-noend)+'条，还有'+noend+'条未完成'}}</p>
+        <p>
+                    <input type="radio" id="rad1" name="chooseType" @click='chooseList(1)' checked="true"/><label for="rad1">所有目标</label>
+                    <input type="radio" id="rad2" name="chooseType" @click='chooseList(2)'/><label for="rad2">已完成目标</label>
+                    <input type="radio" id="rad3" name="chooseType" @click='chooseList(3)'/><label for="rad3">未完成目标</label>
+       </p>
+       <ul>
+           <li v-for="(value,key) in newList" :class="{'eidting':currentIndex===key}">
+            <span class="type-span" :class="{'type-end':value.status}" @click="value.status=!value.status"></span>
+            <p @dblclick="currentIndex=key">{{value.name}}</p>
+            <span class="close" @click="deleteList(key)">X</span>
+           <input type="text" class="text2" v-model="value.name"  @keyup.esc='cancelEdit(value.name)' @blur='edited(value.name)' @focus='editBefore(value.name)' @keyup.enter='edited(value.name)' v-focus />
+       </li>
+        </ul>
+   </div>
+   <script>
+     var app = new Vue({
+         el:'#app',
+         data:{
+           newText:'',
+           proList:[
+               {name:"HTML5",status:false},
+               {name:"CSS3",status:false},
+               {name:"vue",status:false},
+               {name:"react",status:false}
+           ],
+           newList:[],
+           currentIndex:'',
+           editeBeforeText:'',
+           curType:0
+         },
+         computed:{
+           noend:function(){
+             return this.proList.filter(function(value){
+                return !value.status    
+             }).length  
+           }
+         },
+         methods:{
+           addText:function(){
+             this.proList.push({
+               name:this.newText,
+               status:false  
+             })
+             this.newText=''
+           },
+        // 编辑前
+           editBefore:function(value){
+               this.editeBeforeText=value;
+            //    console.log(value)
+           },
+        //    编辑完成时
+           edited:function(value){ 
+              this.currentIndex="";
+              if(value=''){this.editeBeforeText=value}
+           },
+        //    取消编辑
+           cancelEdit:function(value){
+            value.name=this.editeBeforeText;
+            this.currentIndex=""; 
+           },
+        // 删除某一项   
+           deleteList:function(key){
+               this.proList.splice(this.proList[key],1)
+               this.newList=this.proList;
+               this.chooseList(this.curType)
+           },
+           chooseList:function(key){
+             this.curType=key  
+            //  if(key==1){
+            //      this.newList=this.proList;
+            //  }else if(key==2){
+            //      this.newList=this.proList.filter(function(value){
+            //     return value.status    
+            //  })
+            //  }else{
+            //      this.newList=this.proList.filter(function(value){
+            //     return !value.status    
+            //  })
+            //  }
+            // switch(key){
+            //   case 1:this.newList=this.proList;break;
+            //   case 2:this.newList=this.proList.filter(function(value){
+            //     return value.status    
+            //  });break;
+            //   case 3:this.newList=this.proList.filter(function(value){
+            //     return !value.status    
+            //  });break;
+              
+            // }   
+           }
+         },
+         mounted:function(){
+            this.newList=this.proList
+         },
+         directives:{//自定义指令
+            "focus":{
+                update(el){
+                    el.focus();
+                }
+            }
+        }
+     })
+   </script> 
+</body>
+</html>

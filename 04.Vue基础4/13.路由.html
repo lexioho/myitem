@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Hello App!</h1>
+    <p>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <router-link to="/foo">Go to Foo</router-link>
+        <router-link to="/bar">Go to Bar</router-link>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+
+    <router-view></router-view>
+</div>
+<script>
+ // 4. 定义（路由）组件。
+  var Foo={template: '<div>foo</div>'}
+  var Bar={template: '<div>Bar</div>'}
+// 3.定义路由
+//     // 每个路由应该映射一个组件。 其中"component" 可以是
+//     // 通过 Vue.extend() 创建的组件构造器，
+//     // 或者，只是一个组件配置对象。
+//     // 我们晚点再讨论嵌套路由。
+  var routes2 =[
+        { path: '/foo', component: Foo },
+        { path: '/bar', component: Bar }
+
+  ]
+//   2.创建 router 实例，然后传 `routes` 配置
+   var router1 =new VueRouter({
+       routes2
+   })
+//    1.创建和挂载根实例。
+   var app = new Vue({
+       el:'#app',
+       router:router1
+   })
+
+
+</script>  
+</body>
+</html>

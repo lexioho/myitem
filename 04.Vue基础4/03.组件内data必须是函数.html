@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <div id="app">
+     <my-component></my-component>
+   </div>
+
+   <script>
+// 全局组件可以应用到任意一个实例后的标签内，但是局部组件只在当前实例内有效。
+// var data={message:'helloworld'}
+// 当我们在全局组件中写一个data的json格式时，会报错，因为我必须在此处写一个函数来替代他。
+// [Vue warn]: The "data" option should be a function that returns a per-instance value in component definitions.
+  Vue.component('my-component', {
+      template:"<div v-if='message'><input v-model='message' type='text'/><p>{{message}}</p></div><div v-else>111</div>",
+      data:function(){
+        return  {message:'helloworld'}
+      }
+  });
+   var app = new Vue({
+       el:'#app',
+       data:{
+         message:'hello'  
+       }
+    
+   })
+
+
+   </script> 
+</body>
+</html>

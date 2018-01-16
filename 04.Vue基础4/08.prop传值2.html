@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例</title>
+    <script src="../day4/vue.js"></script>
+</head>
+<body>
+    <!--父组件  -->
+<div id="app">
+     <ol>
+        <!--子组件  -->
+         <todo-item v-for="item in sites" v-bind:item="item"></todo-item> 
+    </ol>   
+    <!-- <ol>
+        <li v-for="item in sites">{{item.text}}</li>
+    </ol> -->
+</div>
+
+<script>
+    // 在我们传值过程中，经常会使用v-bind绑定data数据，供我们的组件使用
+    //for循环也可以通过这种组件方式传值
+   // prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。
+   Vue.component('todo-item',{
+     props:['item'],
+     template:'<li>{{item.text}}</li>'
+   })
+    var app= new Vue({
+        el: '#app',
+        data: {
+            sites: [
+                { text: 'Runoob' },
+                { text: 'Google' },
+                { text: 'Taobao' }
+            ]
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例</title>
+    <script src="../day4/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <child v-bind:text="parentMsg"></child>
+</div>
+<script>
+
+
+//    Vue.component('todo-item', {
+//        props: {
+//// 基础类型检测 （`null` 意思是任何类型都可以）
+//            propA: Number,
+//// 多种类型
+//            propB: [String, Number],
+//// 必传且是字符串
+//            propC: {
+//                type: String,
+//                required: true
+//            },
+//// 数字，有默认值
+//            propD: {
+//                type: Number,
+//                default: 100
+//            },
+//// 数组／对象的默认值应当由一个工厂函数返回
+//            propE: {
+//                type: Object,
+//                default: function () {
+//                    return { message: 'hello' }
+//                }
+//            },
+//// 自定义验证函数
+//            propF: {
+//                validator: function (value) {
+//                    return value > 10
+//                }
+//            }
+//        }
+//    })
+//
+
+Vue.component('child', {
+    // 声明 props
+    props: {
+         'text': {
+      type: String,
+      required: true
+    },
+    },
+    // 同样也可以在 app 实例中像 “this.message” 这样使用
+    template: '<p>{{text }}</p>'
+    
+})
+var app = new Vue({
+    el:'#app',
+    data:{
+        parentMsg: '9'
+    }
+})
+
+
+</script>
+</body>
+</html>

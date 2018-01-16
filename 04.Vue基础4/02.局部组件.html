@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <div id="app">
+<my-component1></my-component1>
+<my-component></my-component>   
+   </div>
+   <div id="app1">
+      <!-- <my-component1></my-component1> -->
+    <my-component></my-component>   
+    </div> 
+   <script>
+// 全局组件可以应用到任意一个实例后的标签内，但是局部组件只在当前实例内有效。
+var data={message:'helloworld'}
+  Vue.component('my-component', {
+      template:"<div v-if='message'><input v-model='message' type='text'/><p>{{message}}</p></div><div v-else>111</div>",
+      data:function(){
+        return data
+       }
+  });
+   var app = new Vue({
+       el:'#app',
+       data:{
+         message:'hello'  
+       },
+       components:{
+         'my-component1':{ template:"<div>A custom component!</div>"},
+       }
+   })
+var app1 = new Vue({
+       el:'#app1',
+       data:{
+          
+       }
+   })
+
+   </script> 
+</body>
+</html>

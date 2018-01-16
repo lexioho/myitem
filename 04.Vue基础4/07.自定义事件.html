@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <div id="app">
+       {{total}}<br/>
+      <!-- <button @click="increate">+</button>  -->
+      <todo-item v-on:increate1="increate2"></todo-item>
+      <todo-item v-on:increate1="increate2"></todo-item>
+   </div>
+   <script>
+    //    $on $emit
+
+    Vue.component('todo-item',{
+      template:'<button @click="todoplus">{{counter}}</button>',
+      data:function(){
+          return {counter:0}
+      },
+    //   $emit
+      methods:{
+        todoplus:function(){
+            this.counter+=1;
+            this.$emit('increate1')
+        }
+      }  
+    })
+   var app= new Vue({
+     el:'#app',
+     data:{
+       total:0
+     },
+     methods:{
+       increate2:function(){
+        this.total+=1;
+       }  
+     }
+
+   })
+
+
+   </script> 
+</body>
+</html>
